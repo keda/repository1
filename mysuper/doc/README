@@ -1,0 +1,6 @@
+##################UMLet Tool########################
+uxf为UML文件，若需要打开此类文件请安装UMLet插件
+安装包：com.umlet.plugin_11.4.0.jar
+安装步骤：请将UMLet安装包拷贝到eclipse_home\plugins文件夹中，然后重启eclipse
+新建UML文件：new --> Other --> Other --> Umlet diagram
+######################################################
