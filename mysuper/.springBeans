@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/applicationContext.xml</config>
+		<config>src/msp-servlet.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
