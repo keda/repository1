@@ -6,6 +6,7 @@
 *.pydevproject
 #.project
 .metadata
+rebel.xml
 bin/**
 tmp/**
 tmp/**/*
