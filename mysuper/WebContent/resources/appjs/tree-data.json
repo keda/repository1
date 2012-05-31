@@ -6,65 +6,58 @@ children: [{
     children:[{
         text:'Absolute',
         id:'absolute',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'Accordion',
         id:'accordion',
-        leaf:true
+        leaf:true,
+        url: 'according.jsp'
     },{
         text:'Anchor',
         id:'anchor',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'Border',
         id:'border',
-        leaf:true
+        leaf:true,
+        url: 'according.jsp'
     },{
         text:'Card (TabPanel)',
         id:'card-tabs',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'Card (Wizard)',
         id:'card-wizard',
-        leaf:true
+        leaf:true,
+        url: 'according.jsp'
     },{
         text:'Column',
         id:'column',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'Fit',
         id:'fit',
-        leaf:true
+        leaf:true,
+        url: 'according.jsp'
     },{
         text:'Table',
         id:'table',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'vBox',
         id:'vbox',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     },{
         text:'hBox',
         id:'hbox',
-        leaf:true
-    }]
-},{
-    text:'Custom Layouts',
-    children:[{
-        text:'Center',
-        id:'center',
-        leaf:true
-    }]
-},{
-    text:'Combination Examples',
-    children:[{
-        text:'Absolute Layout Form',
-        id:'abs-form',
-        leaf:true
-    },{
-        text:'Tabs with Nested Layouts',
-        id:'tabs-nested-layouts',
-        leaf:true
+        leaf:true,
+        url: 'home.jsp'
     }]
 }]
 }

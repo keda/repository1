@@ -26,9 +26,11 @@ Ext.onReady(function(){
 		store: store
 	});
 	
-	treePanel.getSelectionModel().on('select', function(selModel, record){
-		if(record.get('leaf')){
-			Ext.MessageBox.alert('abc', record.getId());
+	treePanel.getSelectionModel().on('select', function(selModel, node){
+		if(node.get('leaf')){
+			Ext.Message.alert('Msg', node.attributes.url);
+			var url = '<iframe id="cntIfram" src="'+node.attributes.url+'" frameborder=0 width=100% height=100% scrolling="no"></iframe>';
+			Ext.getCmp('content-panel').body.update(url);
 		}
 	});
 	
@@ -68,7 +70,8 @@ Ext.onReady(function(){
 			region: 'center',
 			layout: 'card',
 			margins: '2 5 5 0',
-			border: false
+			border: false,
+			html: '<iframe src="home.jsp" frameborder=0 width=100% height=100% scrolling="no"></iframe>'
 		}],
 		renderTo: Ext.getBody()
 	});
