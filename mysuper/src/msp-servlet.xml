@@ -19,6 +19,23 @@
  	
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
- 
+    
+    <!-- view of velocity -->
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+    	<property name="resourceLoaderPath" value="/velocity,/resources"></property>
+    	<property name="configLocation" value="/WEB-INF/velocity.properties"></property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+    	<property name="cache" value="true"></property>
+    	<property name="prefix" value=""></property>
+    	<property name="suffix" value=".vm"></property>
+    </bean>
+ 	
+ 	<!-- view of jsp -->
+ 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+ 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+ 		<property name="prefix" value="msp/"></property>
+ 		<property name="suffix" value=".jsp"></property>
+ 	</bean>
 </beans>
 
