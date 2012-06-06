@@ -17,6 +17,7 @@
 <![endif]-->
 <link rel="stylesheet" href="resources/css/nice_button.css" type="text/css" media="screen, projection">
 <script type="text/javascript" src="${ pageContext.request.contextPath }/resources/jquery/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/app.js"></script>
 <title>首页</title>
 <style type="text/css">
 body{
@@ -37,7 +38,7 @@ li{
 	height: 130px;
 }
 #wrapper{
-	width: 90%;
+	width: 1000px;
 	height: auto;
 	margin: 0 auto 20px;
 }
@@ -131,7 +132,7 @@ li{
 
 
 #navigater{
-	width: 90%;
+	width: 1000px;
 	height: 50px;
 	margin: 40px auto;
 	
@@ -307,9 +308,20 @@ button{
   	opacity: .7;
   	z-index: 2000;
 }
+#nav_panel{
+	
+	height: 48px;
+	position: relative;
+	float: left;
+}
 </style>
 
 <script type="text/javascript">
+	var data = ['导航11','导航12','导航13','导航14','导航15','导航16'];
+	$(document).ready(function(){
+		Navigator(data, '', $('#nav_panel'));
+	});
+	
 	$(function(){
 		var i = $('ol[class="sub_nav_ol"] li').length;
 		
@@ -341,6 +353,7 @@ button{
 			$(this).addClass('sub_nav_li_hover');
 			$('span', $(this)).attr('style', 'display: inline-block;width: 100%;height: 100%;');
 		});
+		/**
 		//点击关闭选项卡事件
 		$('a[class="close_icon"]').live('click', function(event){
 			if($('ol[class="sub_nav_ol"] li').length == 1){
@@ -353,6 +366,7 @@ button{
 			$('ol[class="sub_nav_ol"] li:last').trigger('click');
 			
 		});
+		
 		//添加面板按钮点击事件
 		$('button[name="add_view_item"]').bind('click', function(){
 			var subNavOl = $('ol[class="sub_nav_ol"]');
@@ -364,6 +378,7 @@ button{
 			$('<li><span>'+'View'+(++i)
 					+'<a href="javascript:void(0);" class="close_icon"></a></span></li>').appendTo(subNavOl);
 		});
+
 		//弹出框事件
 		$('button[class="blue-pill"]').bind('click', function(){
 		
@@ -376,6 +391,14 @@ button{
 				id: 'dialog'
 			}).appendTo('body');
 			
+		*/
+		//~~~~~~~
+		$('button[name="toVelocity"]').bind('click', function(){
+			$('<form/>').attr({
+				'name':'toVelocity',
+				'action':'${pageContext.request.contextPath}/velocity',
+				'style':'display: none;'
+			}).appendTo('body').submit();
 		});
 	});
 </script>
@@ -397,24 +420,20 @@ button{
 	</div>
 	<div id="navigater">
 		<div id="logo"><span>Logo...</span></div>
-		<ol class="nav_ol">
-		  <li class="atv_nav_ol_li">点滴</li>
-		  <li class="atv_nav_ol_li_hover">点滴</li>
-		  <li class="atv_nav_ol_li_hover">点滴</li>
-		  <li class="atv_nav_ol_li_hover">点滴</li>
-		</ol>
+		<div id="nav_panel"></div>
 	</div>
 	<div id="wrapper">
 		<div class="sub_nav">
 			<button name="add_view_item" class="minimal">Add+</button>
 			<ol class="sub_nav_ol">
-			  <li><span class="selected">View1<a href="javascript:void(0);" class="close_icon"></a></span></li>
-			  <li><span>View2<a href="javascript:void(0);" class="close_icon"></a></span></li>
-			  <li><span>View3<a href="javascript:void(0);" class="close_icon"></a></span></li>
+			  <li><span class="selected">View1</span></li>
+			  <li><span>View2</span></li>
+			  <li><span>View3</span></li>
 			</ol>
 		</div>
 		<div class="datazone">
 			<button class="blue-pill">Dialog</button>
+			<button name="toVelocity" class="minimal">ToVelocity</button>
 		</div>
 	</div>
 	<div id="footer">
