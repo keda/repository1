@@ -282,6 +282,31 @@ button{
 	border-top-left-radius:3px;
 }
 
+#dialog{
+	width: 300px;
+	height: 350px;
+	border: 1px solid red;
+	position: absolute;
+	left: 500px;
+	top: 250px;
+	z-index: 3000;
+}
+
+#disabled{
+	position: absolute;
+	left: 0;
+	top: 30px;
+	width: 100%;
+	background-color: #d7e5f5;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d7e5f5), color-stop(100%, #cbe0f5));
+  	background-image: -webkit-linear-gradient(top, #d7e5f5, #cbe0f5);
+  	background-image: -moz-linear-gradient(top, #d7e5f5, #cbe0f5);
+  	background-image: -ms-linear-gradient(top, #d7e5f5, #cbe0f5);
+  	background-image: -o-linear-gradient(top, #d7e5f5, #cbe0f5);
+  	background-image: linear-gradient(top, #d7e5f5, #cbe0f5);
+  	opacity: .7;
+  	z-index: 2000;
+}
 </style>
 
 <script type="text/javascript">
@@ -339,6 +364,19 @@ button{
 			$('<li><span>'+'View'+(++i)
 					+'<a href="javascript:void(0);" class="close_icon"></a></span></li>').appendTo(subNavOl);
 		});
+		//弹出框事件
+		$('button[class="blue-pill"]').bind('click', function(){
+		
+			$('<div/>').attr({
+				id: 'disabled'
+			}).css('height', function(){
+				return $('body').height();
+			}).appendTo('body');
+			$('<div/>').attr({
+				id: 'dialog'
+			}).appendTo('body');
+			
+		});
 	});
 </script>
 
@@ -376,6 +414,7 @@ button{
 			</ol>
 		</div>
 		<div class="datazone">
+			<button class="blue-pill">Dialog</button>
 		</div>
 	</div>
 	<div id="footer">
