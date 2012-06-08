@@ -10,14 +10,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="resources/css/blueprint/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="resources/css/blueprint/print.css" type="text/css" media="print">
-<!--[if lt IE 8]>
-  <link rel="stylesheet" href="resources/css/blueprint/ie.css" type="text/css" media="screen, projection">
-<![endif]-->
+<link rel="stylesheet" type="text/css" href="resources/extjs/resources/css/ext-all.css"/>
 <link rel="stylesheet" href="resources/css/nice_button.css" type="text/css" media="screen, projection">
-<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/jquery/jquery-1.7.1.js"></script>
-<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/app.js"></script>
+<script type="text/javascript" src="resources/jquery/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="resources/app.js"></script>
+<script type="text/javascript" src="resources/extjs/ext-all.js"></script>
 <title>首页</title>
 <style type="text/css">
 body{
@@ -217,13 +214,15 @@ li{
 	margin-right: 4px;
 }
 #wrapper .datazone{
-	min-height: 500px;
+	
 	background : -webkit-linear-gradient(top, rgb(252, 252, 252) 05%, rgb(232, 232, 232) 61%);
 	background : -moz-linear-gradient(top, rgb(252, 252, 252) 05%, rgb(232, 232, 232) 61%);
 	background : -o-linear-gradient(top, rgb(252, 252, 252) 05%, rgb(232, 232, 232) 61%);
 	background : -ms-linear-gradient(top, rgb(252, 252, 252) 05%, rgb(232, 232, 232) 61%); 
 	background : -linear-gradient(top, rgb(252, 252, 252) 05%, rgb(232, 232, 232) 61%);
-	position: relative;
+	position: absolute;
+	width: 1000px;
+	min-height: 600px;
 }
 
 .selected{
@@ -318,8 +317,16 @@ button{
 
 <script type="text/javascript">
 	var data = ['导航11','导航12','导航13','导航14','导航15','导航16'];
-	$(document).ready(function(){
+	Ext.onReady(function(){
 		Navigator(data, '', $('#nav_panel'));
+		
+		$('div[class="datazone"]').load('${pageContext.request.contextPath}/velocity/view1.html');
+		
+		//选项卡HOVER事件
+		$('ol[class="sub_nav_ol"] li').live('hover', function(){
+			$(this).addClass('sub_nav_li_hover');
+			$('span', $(this)).attr('style', 'display: inline-block;width: 100%;height: 100%;');
+		});
 	});
 	
 	$(function(){
@@ -331,12 +338,7 @@ button{
 			var h = $('.tool_box').css('display') == 'block' ? '24px' : '22px';
 			$(this).css('height', h).toggleClass('atv_tool atv_hover');
 		});
-		//导航栏上目录点击事件
-		$('ol[class="nav_ol"] li').bind('click', function(){
-			var had = $('ol[class="nav_ol"] li[class="atv_nav_ol_li"]');
-			if(had && had != this) $(had).removeClass('atv_nav_ol_li').addClass('atv_nav_ol_li_hover'); 
-			$(this).toggleClass('atv_nav_ol_li atv_nav_ol_li_hover');
-		});
+		
 		//点击选项卡事件
 		$('ol[class="sub_nav_ol"] li').live('click', function(){
 			var had = $('span[class="selected"]', $('ol[class="sub_nav_ol"] li'));
@@ -347,12 +349,11 @@ button{
 			$('div[class="datazone"]').toggle().fadeIn(1000);
 			$('span', $(this)).toggleClass('selected');
 			
+			//load content
+			$('div[class="datazone"]').load($('span', $(this)).attr('data-url'));
+			
 		});
-		//选项卡HOVER事件
-		$('ol[class="sub_nav_ol"] li').live('hover', function(){
-			$(this).addClass('sub_nav_li_hover');
-			$('span', $(this)).attr('style', 'display: inline-block;width: 100%;height: 100%;');
-		});
+		
 		/**
 		//点击关闭选项卡事件
 		$('a[class="close_icon"]').live('click', function(event){
@@ -426,14 +427,13 @@ button{
 		<div class="sub_nav">
 			<button name="add_view_item" class="minimal">Add+</button>
 			<ol class="sub_nav_ol">
-			  <li><span class="selected">View1</span></li>
-			  <li><span>View2</span></li>
-			  <li><span>View3</span></li>
+			  <li><span class="selected" data-url="${pageContext.request.contextPath}/velocity/view1.html">View1</span></li>
+			  <li><span data-url="${pageContext.request.contextPath}/velocity/view2.html">View2</span></li>
+			  <li><span data-url="${pageContext.request.contextPath}/velocity/view1.html">View3</span></li>
+			  <li><span data-url="${pageContext.request.contextPath}/velocity/view2.html">View4</span></li>
 			</ol>
 		</div>
 		<div class="datazone">
-			<button class="blue-pill">Dialog</button>
-			<button name="toVelocity" class="minimal">ToVelocity</button>
 		</div>
 	</div>
 	<div id="footer">

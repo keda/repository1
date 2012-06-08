@@ -29,6 +29,7 @@
     	<property name="cache" value="true"></property>
     	<property name="prefix" value=""></property>
     	<property name="suffix" value=".vm"></property>
+    	<property name="contentType" value="text/html;charset=UTF-8"></property>
     </bean>
  	
  	<!-- view of jsp -->
