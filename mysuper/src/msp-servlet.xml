@@ -11,8 +11,7 @@
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
  
     <!-- Scans within the base package of the application for @Components to configure as beans -->
-    <!-- @Controller, @Service, @Configuration, etc. -->
-    <context:component-scan base-package="com.msp" />
+    <context:component-scan base-package="com.**.controller" />
  	
  	<!-- Resources -->
  	<mvc:resources mapping="/resources/**" location="/resources/"/>

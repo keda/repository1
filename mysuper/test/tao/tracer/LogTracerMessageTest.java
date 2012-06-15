@@ -1,5 +1,7 @@
 package tao.tracer;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
@@ -17,9 +19,10 @@ public class LogTracerMessageTest {
 		String configLocation = "applicationContext.xml";
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(configLocation);
 		
-//		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
+		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
 		
-		for (int i = 0, n = 20; i < n; i++) {
+		
+		for (int i = 0, n = 2; i < n; i++) {
 			System.out.println("<+++++++++++++启动一个线程["+i+"]++++++++++++>");
 			
 			MultiThread thread = new MultiThread();
@@ -31,6 +34,9 @@ public class LogTracerMessageTest {
 			
 		}
 		
+//		List<TaoTracerMessage> l = taoTracerService.queryAllTracerMsg(); 
+//		
+//		System.out.println(l.size());
 		/*
 		log.debug("======================开启第一次保存动作=======================");
 		TaoTracerMessage tracerMsg = new TaoTracerMessage();

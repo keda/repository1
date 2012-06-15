@@ -12,21 +12,21 @@
 
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	<context:annotation-config/>
-	<context:component-scan base-package="com.msp"/>
+	<context:component-scan base-package="com.**.service, com.**.dao"/>
 	
 	<aop:config>
-		<aop:pointcut expression="execution(* com.msp.service.*Service.*(..))" id="txService"/>
+		<aop:pointcut expression="execution(* com..service.*Service.*(..))" id="txService"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txService"/>
 	</aop:config>
 	
 	<!-- tx advisor -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="find*" propagation="SUPPORTS"
+			<tx:method name="find*" propagation="REQUIRED"
 				read-only="true" />
-			<tx:method name="list*" propagation="SUPPORTS"
+			<tx:method name="list*" propagation="REQUIRED"
 				read-only="true" />
-			<tx:method name="query*" propagation="SUPPORTS"
+			<tx:method name="query*" propagation="REQUIRED"
 				read-only="true" />
 			<tx:method name="add*" propagation="REQUIRED"
 				read-only="false" />
@@ -59,7 +59,7 @@
 		</property>
 		<property name="mappingLocations">
 			<list>
-				<value>classpath:/com/**/po/*.hbm.xml</value>
+				<value>classpath:/com/**/vo/*.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

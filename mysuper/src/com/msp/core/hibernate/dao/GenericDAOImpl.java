@@ -65,7 +65,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		
+		log.info("entity name ["+getEntity().getName()+"]");
 		Criteria crit = getSession().createCriteria(getEntity());
 		
 		return crit.list();

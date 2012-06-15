@@ -1,0 +1,16 @@
+{
+	"name": "Taobao Tracer",
+	"version": "1.0",
+	"mainfest_version": 1,
+	"description": "记录你点击的东东.",
+	"content_scripts": [
+	{
+		"matches": [
+		     "http://www.taobao.com/*"
+		   , "http://*.taobao.com/*"
+		   , "http://localhost:9090/mysuper/home.jsp"
+		],
+		"js": ["app/tracer.js"]
+	}	
+	]
+}

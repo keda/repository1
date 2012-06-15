@@ -10,20 +10,19 @@
   
   Ext.onReady(function(){
 	//extjs grid
-	Ext.define('Company', {
+	Ext.define('TaoTracerMessage', {
         extend: 'Ext.data.Model',
         fields: [
-           {name: 'company'},
-           {name: 'price',      type: 'float', convert: null,     defaultValue: undefined},
-           {name: 'change',     type: 'float', convert: null,     defaultValue: undefined},
-           {name: 'pctChange',  type: 'float', convert: null,     defaultValue: undefined},
-           {name: 'lastChange', type: 'date',  dateFormat: 'n/j h:ia', defaultValue: undefined}
+           {name: 'id'},
+           {name: 'infoName'},
+           {name: 'infoUrl', convert: function(v){return !v ? '' : v;}},
+           {name: 'clientIp'},
+           {name: 'infoDate'},
+		   {name: 'timestamp'}
         ],
-        idProperty: 'company'
+        idProperty: 'id'
     });
-	// sample static data for the store
-    var myData = $data;
-	
+
 	/**
      * Custom function used for column renderer
      * @param {Object} val
@@ -50,74 +49,102 @@
         return val;
     }
 	// create the data store
-    var store = Ext.create('Ext.data.ArrayStore', {
-        model: 'Company',
-        data: myData
+    var store = Ext.create('Ext.data.JsonStore', {
+        pageSize: 50,
+		storeId: 'storeForMsg',
+		model: 'TaoTracerMessage',
+        remoteSort: true,
+		proxy: {
+			type: 'ajax',
+            url: '$contextPath/taobao/tracer/query.do',
+            reader: {
+                type: 'json',
+                root: '',
+                idProperty: 'id',
+				totalProperty: 'total'
+            }
+		}
+		
     });
 	
 	// create the Grid
     var grid = Ext.create('Ext.grid.Panel', {
-        store: store,
+		store: Ext.getStore('storeForMsg'),
         stateful: true,
         ##collapsible: true,
 		##columnLines: true,
-		draggable: true,
+		##draggable: true,
         multiSelect: true,
         stateId: 'stateGrid',
         columns: [
             {
-                text     : 'Company',
-                flex     : 1,
-                sortable : false,
-                dataIndex: 'company'
+                text     : 'ID',
+				type: 'int',
+                dataIndex: 'id'
             },
             {
-                text     : 'Price',
-                width    : 75,
-                sortable : true,
-                renderer : 'usMoney',
-                dataIndex: 'price'
+                text     : 'InfoName',
+                dataIndex: 'infoName',
+				field: {xtype: 'textfield', allowBlank: false}
             },
             {
-                text     : 'Change',
-                width    : 75,
-                sortable : true,
-                renderer : change,
-                dataIndex: 'change'
+                text     : 'InfoUrl',
+                width    : 430,
+                dataIndex: 'infoUrl',
+				renderer: function(url) {
+					return Ext.String.format('<a href="{0}" style="color: #000;" target="_black">{1}</a>', url, url);
+				},
+				field: 'textfield'
             },
             {
-                text     : '% Change',
-                width    : 75,
-                sortable : true,
-                renderer : pctChange,
-                dataIndex: 'pctChange'
+                text     : 'clientIp',
+                dataIndex: 'clientIp'
             },
             {
-                text     : 'Last Updated',
-                width    : 85,
-                sortable : true,
-                renderer : Ext.util.Format.dateRenderer('m/d/Y'),
-                dataIndex: 'lastChange'
+                text     : 'InfoDate',
+                width    : 150,
+                dataIndex: 'infoDate'
+            },
+            {
+                text     : 'Timestamp',
+                dataIndex: 'timestamp'
             }
         ],
+		selType: 'rowmodel', //rowmodel: select row, cellmodel: select cell
+        plugins: [
+            Ext.create('Ext.grid.plugin.RowEditing', {
+                clicksToEdit: 1 //1:stand for click, 2:stand for double-click
+            })
+        ],
+		sorters: ['id','timestamp'],
+		features: [{ftype:'grouping'}],
+		#*
 		listeners: {
 			'cellclick': function(ob, td, cellIndex, record, tr, rowIndex){
-				
 				Ext.MessageBox.alert('消息', this.columns[cellIndex].text+' : '+td.innerText, function(){
 					Ext.Msg.alert('Msg', '我是这个时候执行的...');
 					##Ext.fly('ext-gen1056').setStyle({top: '30px'});
 				});
 			}
 		},
-        ##height: 350,
-        width: 600,
-        ##title: 'Array Grid',
-        renderTo: 'data-cnt'
-		##viewConfig: {
-        ##    stripeRows: true,
-        ##    enableTextSelection: true
-        ##}
+		*#
+        height: 600,
+        ##width: 600,
+        ##title: '你的访问记录',
+        renderTo: 'data-cnt',
+		dockedItems: [{
+            xtype: 'pagingtoolbar',
+            store: store,   // same store GridPanel is using
+            dock: 'bottom',
+            displayInfo: true
+        }],
+		viewConfig: {
+            stripeRows: true,
+            enableTextSelection: true
+        }
 		
     });
+	store.loadPage(1);
+	
   });
 </script>

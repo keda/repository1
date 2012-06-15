@@ -19,8 +19,9 @@ public class TaoTracerService {
 	@Autowired
 	private TaoTracerMessageDAO taoTracerMsgDao;
 	
-	public List<TaoTracerMessage> queryAllTracerMsg() {
-		return taoTracerMsgDao.findAll();
+	public List<TaoTracerMessage> queryAllTracerMsg(int page, int start, int limit) {
+//		return taoTracerMsgDao.findAll();
+		return taoTracerMsgDao.queryTracerMsg(page, start, limit);
 	}
 	
 	public void saveTracerMsg(TaoTracerMessage tracerMsg) {

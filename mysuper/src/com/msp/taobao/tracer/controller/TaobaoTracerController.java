@@ -1,8 +1,10 @@
 package com.msp.taobao.tracer.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,23 +60,13 @@ public class TaobaoTracerController {
 	}
 	
 	@RequestMapping(value="query.do")
-	public ModelAndView queryTracerMsg(@ModelAttribute TaoTracerMessage tracerMsg, ModelAndView model) {
+	public @ResponseBody List<TaoTracerMessage> queryTracerMsg(@RequestParam("page") int page, @RequestParam("start") int start, @RequestParam("limit") int limit) {
 		
-		List<TaoTracerMessage> msgList = taoTracerService.queryAllTracerMsg();
-		StringBuffer sb = new StringBuffer(msgList.size()*300);
-		for (TaoTracerMessage msg : msgList) {
-			sb.append("['"+msg.getInfoName()+"','"+msg.getClientIp()+"','"+msg.getInfoDate()+"','"+msg.getTimestamp()+"'],");
-		}
-		sb.insert(0, "[");
-		sb.deleteCharAt(sb.lastIndexOf(","));
-		sb.append("]");
+		List<TaoTracerMessage> msgList = taoTracerService.queryAllTracerMsg(page, start, limit);
 		
-		model.setViewName("welcome");
-		model.addObject("msgList", sb);
-		model.addObject("currTime", System.currentTimeMillis());
-		model.addObject("contextPath", "query.do");
+		logger.debug("return Msg size "+msgList.size());
 		
-		return model;
+		return msgList;
 		
 	}
 }
