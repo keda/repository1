@@ -38,8 +38,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 		}else{
 			log.debug("session来自 ... [session]");
 		}
-		
-		
+	
 		return session;
 	}
 
@@ -66,6 +65,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 	@Override
 	public List<T> findAll() {
 		log.info("entity name ["+getEntity().getName()+"]");
+		
 		Criteria crit = getSession().createCriteria(getEntity());
 		
 		return crit.list();

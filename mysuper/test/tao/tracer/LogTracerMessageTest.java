@@ -1,7 +1,6 @@
 package tao.tracer;
 
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +18,7 @@ public class LogTracerMessageTest {
 		String configLocation = "applicationContext.xml";
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(configLocation);
 		
-		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
+//		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
 		
 		
 		for (int i = 0, n = 2; i < n; i++) {

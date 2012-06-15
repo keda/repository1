@@ -103,6 +103,26 @@
 				'style':'display: none;'
 			}).appendTo('body').submit();
 		});
+		
+		//~~~~~~~~~~~~~
+		$('button[name="add_view_item"]').bind('click', function(){
+			
+			var clientInfo = {};
+			
+			$.getJSON('${pageContext.request.contextPath}/taobao/tracer/clientInfo.do', function(data){
+				var items=[];
+				
+				$.each(data, function(key, value){
+					//items.push('['+key+','+value+']');
+					clientInfo[key] = value;
+				});
+				
+				//Ext.Msg.alert('Msg', items.join(''));
+				Ext.Msg.alert('Msg', clientInfo.clientIp);
+			});
+			
+		});
+		
 	});
 </script>
 

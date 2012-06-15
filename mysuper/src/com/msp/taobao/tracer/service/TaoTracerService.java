@@ -22,6 +22,7 @@ public class TaoTracerService {
 	public List<TaoTracerMessage> queryAllTracerMsg(int page, int start, int limit) {
 //		return taoTracerMsgDao.findAll();
 		return taoTracerMsgDao.queryTracerMsg(page, start, limit);
+
 	}
 	
 	public void saveTracerMsg(TaoTracerMessage tracerMsg) {

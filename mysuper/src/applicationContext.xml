@@ -12,13 +12,14 @@
 
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	<context:annotation-config/>
-	<context:component-scan base-package="com.**.service, com.**.dao"/>
+
+	<!-- scan @Service,@Repository,exclude @Controller for manager transaction -->
+	<context:component-scan base-package="com.**.service,com.**.dao"/>
 	
 	<aop:config>
-		<aop:pointcut expression="execution(* com..service.*Service.*(..))" id="txService"/>
+		<aop:pointcut expression="execution(* com.msp..service.*Service.*(..))" id="txService"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txService"/>
 	</aop:config>
-	
 	<!-- tx advisor -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -38,13 +39,16 @@
 				read-only="false" />
 		</tx:attributes>
 	</tx:advice>
-	
 	<!-- c3p0 connection -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="${jdbc.driverClassName}"></property>
 		<property name="jdbcUrl" value="${jdbc.url}"></property>
 		<property name="user" value="${jdbc.username}"></property>
 		<property name="password" value="${jdbc.password}"></property>
+		
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>
+		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
+		
 	</bean>
 	
 	<!-- hibernate sessionFactory -->

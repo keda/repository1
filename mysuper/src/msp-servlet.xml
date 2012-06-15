@@ -37,5 +37,9 @@
  		<property name="prefix" value="msp/"></property>
  		<property name="suffix" value=".jsp"></property>
  	</bean>
+ 	
+ 	<!-- view of json -->
+ 	<bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver"></bean>
+ 	
 </beans>
 
