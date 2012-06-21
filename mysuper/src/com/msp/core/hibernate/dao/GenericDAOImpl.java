@@ -6,12 +6,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.msp.core.util.Pager;
 
 public abstract class GenericDAOImpl<T, ID extends Serializable> implements GenericDAO<T, ID> {
 
@@ -64,18 +68,24 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		log.info("entity name ["+getEntity().getName()+"]");
 		
-		Criteria crit = getSession().createCriteria(getEntity());
+		return getCriteria().list();
+	}
+	
+	@Override
+	public long total() {
 		
-		return crit.list();
+		return ((Long) getCriteria()
+				.setProjection(Projections.rowCount()).list().get(0))
+				.longValue();
+		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
 		
-		Criteria crit = getSession().createCriteria(getEntity());
+		Criteria crit = getCriteria();
 		Example example = Example.create(exampleInstance);
 		
 		for (String name : excludeProperty) {
@@ -89,7 +99,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 	@Override
 	public List<T> findByExample(T exampleInstance) {
 		
-		Criteria crit = getSession().createCriteria(getEntity());
+		Criteria crit = getCriteria();
 		Example example = Example.create(exampleInstance);
 		
 		return crit.add(example).list();
@@ -98,13 +108,37 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 	@SuppressWarnings("unchecked")
 	public List<T> findByCriteria(Criterion... criterion) {
 		
-		Criteria crit = getSession().createCriteria(getEntity());
+		Criteria crit = getCriteria();
 		
 		for (Criterion c : criterion) {
 			crit.add(c);
 		}
 		
 		return crit.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pager<T> findByExample(T exampleInstance, Pager<T> pager) {
+		
+		pager.setTotal(total());
+		
+		Criteria crit = getCriteria();
+		
+		if(null != exampleInstance)
+			crit.add(Example.create(exampleInstance));
+		
+		crit.setFirstResult(pager.getStart())
+			.setMaxResults(pager.getLimit());
+		
+		pager.setData(crit.list());
+		
+		return pager;
+	}
+	
+	protected Criteria getCriteria() {
+		log.debug("###创建一个Criteria ["+getEntity().getName()+"]");
+		return getSession().createCriteria(getEntity());
 	}
 
 	@Override

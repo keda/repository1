@@ -18,9 +18,13 @@ public class LogTracerMessageTest {
 		String configLocation = "applicationContext.xml";
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(configLocation);
 		
-//		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
+		TaoTracerService taoTracerService = ctx.getBean(TaoTracerService.class);
 		
+//		List<TaoTracerMessage> l = taoTracerService.queryAllTracerMsg(1, 0, 1000);
 		
+//		System.out.println("#######################共有 " + l.size() + " 条消息");
+		
+		/*
 		for (int i = 0, n = 2; i < n; i++) {
 			System.out.println("<+++++++++++++启动一个线程["+i+"]++++++++++++>");
 			
@@ -32,7 +36,7 @@ public class LogTracerMessageTest {
 			
 			
 		}
-		
+		*/
 //		List<TaoTracerMessage> l = taoTracerService.queryAllTracerMsg(); 
 //		
 //		System.out.println(l.size());

@@ -20,6 +20,13 @@
 
 <script type="text/javascript">
 	var data = ['导航11','导航12','导航13','导航14','导航15','导航16'];
+	Ext.Loader.setConfig({
+		enabled:true,
+		paths: {
+			'Ext' : './resources/extjs'
+		}
+	});
+	
 	Ext.onReady(function(){
 		Navigator(data, '', $('#nav_panel'));
 		
@@ -33,7 +40,6 @@
 	});
 	
 	$(function(){
-		var i = $('ol[class="sub_nav_ol"] li').length;
 		
 		//工具条中'工具'点击事件
 		$('li[user-data="msp_tool"]').bind('click', function(){
@@ -110,14 +116,12 @@
 			var clientInfo = {};
 			
 			$.getJSON('${pageContext.request.contextPath}/taobao/tracer/clientInfo.do', function(data){
-				var items=[];
 				
 				$.each(data, function(key, value){
-					//items.push('['+key+','+value+']');
+					
 					clientInfo[key] = value;
 				});
 				
-				//Ext.Msg.alert('Msg', items.join(''));
 				Ext.Msg.alert('Msg', clientInfo.clientIp);
 			});
 			
@@ -151,7 +155,7 @@
 			<ol class="sub_nav_ol">
 			  <li><span class="selected" data-url="${pageContext.request.contextPath}/velocity/view1.html">View1</span></li>
 			  <li><span data-url="${pageContext.request.contextPath}/taobao/tracer/query.do">View2</span></li>
-			  <li><span data-url="${pageContext.request.contextPath}/velocity/view1.html">View3</span></li>
+			  <li><span data-url="${pageContext.request.contextPath}/velocity/view2.html">View3</span></li>
 			  <li><span data-url="${pageContext.request.contextPath}/taobao/tracer/query.do">View4</span></li>
 			</ol>
 		</div>

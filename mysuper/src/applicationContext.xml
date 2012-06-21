@@ -12,13 +12,15 @@
 
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	<context:annotation-config/>
+	<aop:aspectj-autoproxy/>
 
 	<!-- scan @Service,@Repository,exclude @Controller for manager transaction -->
-	<context:component-scan base-package="com.**.service,com.**.dao"/>
+	<context:component-scan base-package="com.**.service,com.**.dao,com.**.aop"/>
 	
 	<aop:config>
 		<aop:pointcut expression="execution(* com.msp..service.*Service.*(..))" id="txService"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txService"/>
+		
 	</aop:config>
 	<!-- tx advisor -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">

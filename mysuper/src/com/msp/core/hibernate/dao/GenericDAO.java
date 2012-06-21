@@ -3,6 +3,8 @@ package com.msp.core.hibernate.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import com.msp.core.util.Pager;
+
 /**A super interface for common CRUD functionality
  * @author Administrator
  *
@@ -19,7 +21,11 @@ public interface GenericDAO<T, ID extends Serializable> {
 	
 	List<T> findByExample(T exampleInstance);
 	
+	Pager<T> findByExample(T exampleInstance, Pager<T> pager);
+	
 	T save(T entity);
 	
 	void delete(T entity);
+
+	long total();
 }

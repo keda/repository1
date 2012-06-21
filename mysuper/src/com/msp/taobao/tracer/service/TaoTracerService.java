@@ -1,5 +1,6 @@
 package com.msp.taobao.tracer.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.msp.core.util.Pager;
 import com.msp.taobao.tracer.dao.TaoTracerMessageDAO;
 import com.msp.taobao.tracer.vo.TaoTracerMessage;
 
@@ -19,10 +21,17 @@ public class TaoTracerService {
 	@Autowired
 	private TaoTracerMessageDAO taoTracerMsgDao;
 	
-	public List<TaoTracerMessage> queryAllTracerMsg(int page, int start, int limit) {
-//		return taoTracerMsgDao.findAll();
-		return taoTracerMsgDao.queryTracerMsg(page, start, limit);
-
+	public Pager<TaoTracerMessage> queryAllTracerMsg(Pager<TaoTracerMessage> pager) {
+		/*
+		try {
+			Thread.sleep(10000L);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		return taoTracerMsgDao.findByExample(null, pager);
+		
 	}
 	
 	public void saveTracerMsg(TaoTracerMessage tracerMsg) {

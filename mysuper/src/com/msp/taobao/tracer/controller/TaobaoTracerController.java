@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.msp.core.util.Pager;
 import com.msp.taobao.tracer.service.TaoTracerService;
 import com.msp.taobao.tracer.vo.ClientInfo;
 import com.msp.taobao.tracer.vo.TaoTracerMessage;
@@ -57,13 +58,11 @@ public class TaobaoTracerController {
 	}
 	
 	@RequestMapping(value="query.do")
-	public @ResponseBody List<TaoTracerMessage> queryTracerMsg(@RequestParam("page") int page, @RequestParam("start") int start, @RequestParam("limit") int limit) {
+	public @ResponseBody Pager<TaoTracerMessage> queryTracerMsg(@ModelAttribute Pager<TaoTracerMessage> pager) {
 		
-		List<TaoTracerMessage> msgList = taoTracerService.queryAllTracerMsg(page, start, limit);
+		pager = taoTracerService.queryAllTracerMsg(pager);
 		
-		logger.debug("return Msg size "+msgList.size());
-		
-		return msgList;
+		return pager;
 		
 	}
 }
